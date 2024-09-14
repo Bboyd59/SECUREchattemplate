@@ -58,5 +58,58 @@
         "content": "Hello Brandon! Welcome to Secure Mortgage. How can I assist you today with information about mortgages or home loans? Please let me know if you have any specific questions, and I'll be happy to provide helpful details in a friendly and concise manner. Rest assured, I prioritize security and confidentiality in all our discussions."
       }
     ]
+  },
+  "1726293955839": {
+    "firstName": "Brandon",
+    "phone": "9516756893",
+    "email": "brandonboyd50@icloud.com",
+    "conversationHistory": [
+      {
+        "role": "user",
+        "content": "hello"
+      },
+      {
+        "role": "assistant",
+        "content": "Hello Brandon! Welcome to Secure Mortgage. How can I assist you today with information about mortgages or home loans?"
+      }
+    ]
+  },
+  "1726294644459": {
+    "firstName": "Brandon",
+    "phone": "9516756893",
+    "email": "brandonboyd50@icloud.com",
+    "conversationHistory": [
+      {
+        "role": "user",
+        "content": "what docs do i need"
+      },
+      {
+        "role": "assistant",
+        "content": "Hi Brandon, to apply for a mortgage, you will typically need the following documents:\n\n-   Government-issued ID (driver's license, passport)\n-   Social Security card \n-   W-2 and tax return forms for the last 2 years to show your income\n-   Pay stubs for the last 30 days to verify your income \n-   Bank statements for the last 2-4 months to show your assets and down payment amount\n-   Information on the property you want to purchase\n\nLet me know if you have any other questions!"
+      }
+    ]
+  },
+  "1726295731219": {
+    "firstName": "Brandon",
+    "phone": "9516756893",
+    "email": "brandonboyd50@icloud.com",
+    "conversationHistory": [
+      {
+        "role": "user",
+        "content": "hello"
+      },
+      {
+        "role": "assistant",
+        "content": "Hello Brandon! How can I help you today with mortgages or home loans?"
+      },
+      {
+        "role": "user",
+        "content": "what docs do i need"
+      },
+      {
+        "role": "assistant",
+        "content": "To apply for a mortgage, you will typically need to provide the following documents:\n\n* Your 2 most recent pay stubs to verify your income\n* Your W-2 and/or 1099 tax forms for the previous 2 years \n* Your last 2 years of tax returns (if self-employed or receiving income from investments)\n* Your bank statements for the past 2-3 months to show your down payment and cash reserves\n* Your credit report to check for any errors before applying \n* Photo ID (driver's license)\n* Evidence of any other income (rental, Social Security, disability, etc.)\n* Gift letter if receiving a gift for some of the down payment\n\nDoes this help outline what you will need to prepare? Let me know if you have any other questions."
+      }
+    ]
   }
 }
