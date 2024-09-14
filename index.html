@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Secure Mortgage Assistant</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* CSS Variables for Consistent Theming */
+        :root {
+            --primary-color: #1e88e5;
+            --secondary-color: #64b5f6;
+            --background-color: #f0f4f8;
+            --card-background: rgba(255, 255, 255, 0.15);
+            --text-color: #333333;
+            --input-background: rgba(227, 242, 253, 0.25);
+            --border-color: rgba(255, 255, 255, 0.3);
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --gradient-overlay: linear-gradient(135deg, rgba(30, 136, 229, 0.8), rgba(100, 181, 246, 0.8));
+            --dark-gray: #4a4a4a;
+            --light-gray: #e0e0e0;
+            --error-color: #e53935;
+        }
+
+        /* Global Styles */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, var(--background-color), #ffffff);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 40px 20px;
+            flex: 1;
+        }
+
+        /* Heading Styles */
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        /* Card Styles with Glassmorphism */
+        .card {
+            background: var(--card-background);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px var(--shadow-color);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            margin-bottom: 40px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            background: var(--gradient-overlay);
+            color: white;
+            padding: 25px 20px;
+            position: relative;
+        }
+
+        .card-title {
+            margin: 0;
+            font-size: 1.8em;
+            font-weight: 600;
+        }
+
+        .card-content {
+            padding: 25px 20px;
+        }
+
+        /* Input Group Styles */
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        input[type="text"], input[type="email"], input[type="tel"], input[type="number"], select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--border-color);
+            background-color: var(--input-background);
+            border-radius: 8px;
+            font-size: 16px;
+            color: var(--dark-gray);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        input::placeholder {
+            color: var(--dark-gray);
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            box-shadow: 0 0 10px var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--dark-gray);
+        }
+
+        /* Button Styles */
+        button {
+            background: var(--primary-color);
+            color: white;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Result Display Styles */
+        .result {
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 12px 16px;
+            background-color: rgba(227, 242, 253, 0.25);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            color: var(--dark-gray);
+        }
+
+        /* Error Message Styles */
+        .error-message {
+            color: var(--error-color);
+            font-weight: bold;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        /* Refresh Icon Styles */
+        .refresh-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            font-size: 1.4em;
+            transition: transform 0.3s ease;
+        }
+
+        .refresh-icon:hover {
+            transform: rotate(90deg);
+        }
+
+        /* Grid Layout for DTI Calculator */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        /* Chatbox Styles */
+        #chatbox {
+            height: 350px;
+            overflow-y: auto;
+            border: 1px solid var(--secondary-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            color: var(--text-color);
+        }
+
+        .chat-message {
+            margin-bottom: 15px;
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-message.user {
+            align-items: flex-end;
+        }
+
+        .chat-message.user p {
+            background: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px 20px 0 20px;
+            max-width: 80%;
+            word-wrap: break-word;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .chat-message.ai {
+            align-items: flex-start;
+        }
+
+        .chat-message.ai p {
+            background: var(--secondary-color);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px 20px 20px 0;
+            max-width: 80%;
+            word-wrap: break-word;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Chat Input Container */
+        #chat-input-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #userInput {
+            flex-grow: 1;
+            padding: 14px 16px;
+            border: 1px solid var(--border-color);
+            background-color: var(--input-background);
+            border-radius: 8px;
+            font-size: 16px;
+            color: var(--dark-gray);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        #userInput::placeholder {
+            color: var(--dark-gray);
+        }
+
+        #userInput:focus {
+            outline: none;
+            box-shadow: 0 0 10px var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        /* Footer Styles */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 0.95em;
+            color: var(--text-color);
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border-color);
+            margin-top: 60px;
+            border-radius: 15px 15px 0 0;
+            box-shadow: 0 -4px 6px var(--shadow-color);
+        }
+
+        footer strong {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 10px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .card-header {
+                padding: 20px 15px;
+            }
+
+            .card-title {
+                font-size: 1.5em;
+            }
+
+            .card-content {
+                padding: 20px 15px;
+            }
+
+            button {
+                padding: 12px 18px;
+                font-size: 15px;
+            }
+
+            #chatbox {
+                height: 300px;
+            }
+        }
+
+        /* DTI Calculator Styles */
+        .dti-calculator .section {
+            margin-bottom: 30px;
+        }
+
+        .dti-calculator .section h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            text-align: center;
+        }
+
+        .dti-calculator .inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .dti-calculator .debts-container {
+            margin-bottom: 20px;
+        }
+
+        .dti-calculator .debts-container .debt-item {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .dti-calculator .debts-container .debt-item input,
+        .dti-calculator .debts-container .debt-item select {
+            width: 100%;
+        }
+
+        .dti-calculator .debts-container .debt-item button {
+            background: #e53935;
+            padding: 10px;
+        }
+
+        .dti-calculator .results {
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--dark-gray);
+            margin-top: 20px;
+        }
+
+        .dti-calculator .error-message {
+            color: var(--error-color);
+            font-weight: bold;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        /* Chatbot Markdown Styling */
+        .chat-message.ai p {
+            white-space: pre-wrap;
+        }
+
+        .chat-message.ai p h1,
+        .chat-message.ai p h2,
+        .chat-message.ai p h3 {
+            margin: 0;
+            padding: 0;
+        }
+
+        .chat-message.ai p strong {
+            font-weight: bold;
+        }
+
+        .chat-message.ai p em {
+            font-style: italic;
+        }
+
+        .chat-message.ai p ul {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+
+        .chat-message.ai p li {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Secure Mortgage Assistant</h1>
+
+        <!-- Registration Card -->
+        <div id="registration" class="card">
+            <div class="card-header">
+                <h2 class="card-title">Welcome to Secure Mortgage</h2>
+            </div>
+            <div class="card-content">
+                <div class="input-group">
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" placeholder="First Name" required>
+                </div>
+                <div class="input-group">
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" placeholder="Phone" required>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" placeholder="Email" required>
+                </div>
+                <button onclick="register()">Register</button>
+            </div>
+        </div>
+
+        <!-- Chat Card -->
+        <div id="chat" class="card" style="display:none;">
+            <div class="card-header">
+                <h2 class="card-title">Chat with our AI Assistant</h2>
+                <span class="refresh-icon" onclick="refreshChat()">↻</span>
+            </div>
+            <div class="card-content">
+                <div id="chatbox"></div>
+                <div id="chat-input-container">
+                    <input type="text" id="userInput" placeholder="Type your message..." required>
+                    <button onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- DTI Calculator -->
+        <div class="dti-calculator card">
+            <div class="card-header">
+                <h2 class="card-title">DTI Calculator</h2>
+            </div>
+            <div class="card-content">
+                <div class="section">
+                    <h3>Mortgage Information</h3>
+                    <div class="inputs">
+                        <div class="input-group">
+                            <label for="purchasePrice">Purchase Price:</label>
+                            <input type="text" id="purchasePrice" placeholder="Purchase Price" value="500,000" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="downPaymentPercentage">Down Payment %:</label>
+                            <input type="text" id="downPaymentPercentage" placeholder="Down Payment (%)" value="20" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="loanAmount">Loan Amount:</label>
+                            <input type="text" id="loanAmount" placeholder="Loan Amount" readonly>
+                        </div>
+                        <div class="input-group">
+                            <label for="interestRate">Interest Rate %:</label>
+                            <input type="text" id="interestRate" placeholder="Interest Rate (%)" value="7.75" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="loanTerm">Loan Term (years):</label>
+                            <input type="text" id="loanTerm" placeholder="Loan Term (years)" value="30" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="monthlyTaxes">Monthly Taxes:</label>
+                            <input type="text" id="monthlyTaxes" placeholder="Monthly Taxes" readonly>
+                        </div>
+                        <div class="input-group">
+                            <label for="monthlyInsurance">Monthly Insurance:</label>
+                            <input type="text" id="monthlyInsurance" placeholder="Monthly Insurance" value="0" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="pmi">PMI:</label>
+                            <input type="text" id="pmi" placeholder="PMI" readonly>
+                        </div>
+                    </div>
+                    <div class="results" id="monthlyPaymentResult">Estimated Monthly Payment: $0.00</div>
+                </div>
+
+                <div class="section">
+                    <h3>Current Debts</h3>
+                    <div class="debts-container" id="debtsContainer">
+                        <!-- Debt items will be added here -->
+                    </div>
+                    <button onclick="addDebt()">Add Debt</button>
+                </div>
+
+                <div class="section">
+                    <h3>Monthly Income</h3>
+                    <div class="input-group">
+                        <label for="monthlyIncome">Estimated Monthly Income:</label>
+                        <input type="text" id="monthlyIncome" placeholder="Estimated Monthly Income" required>
+                    </div>
+                    <button onclick="calculateDTI()">Calculate DTI</button>
+                    <div class="results" id="dtiResult">Debt-to-Income Ratio (DTI): 0%</div>
+                    <div class="error-message" id="dtiErrorMessage"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <strong>Disclaimer:</strong> The calculations provided by this application are for informational purposes only and do not constitute a credit approval, loan offer, or guarantee of qualification. Actual loan approval is subject to underwriting guidelines, credit approval, and lender discretion. Please consult with a mortgage professional for further assistance.<br><br>
+        <strong>Contact Information:</strong> Secure Choice Lending, 1650 Spruce St Suite 500, Riverside, CA 92507 | NMLS ID: 1689518 | California Department of Real Estate #02050654
+    </footer>
+
+    <!-- Include a Markdown Parser Library -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script>
+        let userId;
+
+        // Function to Register a New User
+        function register() {
+            const firstName = document.getElementById('firstName').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const email = document.getElementById('email').value.trim();
+
+            // Simple Validation
+            if (!firstName || !phone || !email) {
+                alert('Please fill in all registration fields.');
+                return;
+            }
+
+            fetch('/api/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ firstName, phone, email }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.userId) {
+                    userId = data.userId;
+                    document.getElementById('registration').style.display = 'none';
+                    document.getElementById('chat').style.display = 'block';
+                    addChatMessage('assistant', `Hello ${data.firstName}! How can I assist you with your mortgage today?`);
+                } else {
+                    alert('Registration failed. Please try again.');
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('An error occurred during registration. Please try again.');
+            });
+        }
+
+        // Function to Send a Message in Chat
+        function sendMessage() {
+            const messageInput = document.getElementById('userInput');
+            const message = messageInput.value.trim();
+            if (!message) return;
+
+            addChatMessage('user', message);
+            messageInput.value = '';
+
+            fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userId, message }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.reply) {
+                    addChatMessage('ai', data.reply);
+                } else {
+                    addChatMessage('ai', 'Sorry, I encountered an error processing your request.');
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                addChatMessage('ai', 'Sorry, something went wrong. Please try again later.');
+            });
+        }
+
+        // Event Listener for Enter Key in Chat Input
+        document.getElementById('userInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // Function to Refresh Chatbox
+        function refreshChat() {
+            document.getElementById('chatbox').innerHTML = '';
+        }
+
+        // Function to Add a New Debt Input Field
+        function addDebt() {
+            const debtsContainer = document.getElementById('debtsContainer');
+            const debtItem = document.createElement('div');
+            debtItem.className = 'debt-item';
+
+            debtItem.innerHTML = `
+                <input type="text" placeholder="Debt Name" required>
+                <input type="text" placeholder="Monthly Payment" required>
+                <input type="text" placeholder="Total Balance" required>
+                <select>
+                    <option value="Keep">Keep</option>
+                    <option value="Pay Off">Pay Off</option>
+                </select>
+                <button onclick="removeDebt(this)">Remove</button>
+            `;
+
+            debtsContainer.appendChild(debtItem);
+        }
+
+        // Function to Remove a Debt Input Field
+        function removeDebt(button) {
+            const debtItem = button.parentElement;
+            debtItem.remove();
+            // Recalculate DTI when a debt is removed
+            calculateDTI();
+        }
+
+        // Function to Format Numbers with Commas
+        function formatNumber(value) {
+            const number = parseFloat(value.replace(/,/g, ''));
+            return isNaN(number) ? '' : number.toLocaleString('en-US');
+        }
+
+        // Function to Parse Number from Input
+        function parseNumber(value) {
+            return parseFloat(value.replace(/,/g, '')) || 0;
+        }
+
+        // Function to Calculate Loan Amount
+        function calculateLoanAmount(price, downPaymentPercentage) {
+            return parseNumber(price) * (1 - parseNumber(downPaymentPercentage) / 100);
+        }
+
+        // Function to Calculate Monthly Taxes
+        function calculateMonthlyTaxes(price) {
+            return (parseNumber(price) * 0.0125) / 12;
+        }
+
+        // Function to Calculate PMI
+        function calculatePMI(loanAmount) {
+            return (loanAmount * 0.0055) / 12;
+        }
+
+        // Function to Calculate Mortgage Payment
+        function calculateMortgagePayment() {
+            const principal = parseNumber(document.getElementById('loanAmount').value);
+            const monthlyRate = parseNumber(document.getElementById('interestRate').value) / 100 / 12;
+            const numberOfPayments = parseNumber(document.getElementById('loanTerm').value) * 12;
+
+            let mortgagePayment = 0;
+            if (monthlyRate > 0) {
+                mortgagePayment = principal * (monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) / (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
+            } else {
+                mortgagePayment = principal / numberOfPayments;
+            }
+
+            const monthlyTaxes = parseNumber(document.getElementById('monthlyTaxes').value);
+            const monthlyInsurance = parseNumber(document.getElementById('monthlyInsurance').value);
+            const pmi = parseNumber(document.getElementById('pmi').value);
+
+            return mortgagePayment + monthlyTaxes + monthlyInsurance + pmi;
+        }
+
+        // Function to Calculate DTI
+        function calculateDTI() {
+            const purchasePrice = document.getElementById('purchasePrice').value;
+            const downPaymentPercentage = document.getElementById('downPaymentPercentage').value;
+            const interestRate = document.getElementById('interestRate').value;
+            const loanTerm = document.getElementById('loanTerm').value;
+            const monthlyIncome = document.getElementById('monthlyIncome').value;
+
+            const dtiErrorMessage = document.getElementById('dtiErrorMessage');
+            dtiErrorMessage.textContent = '';
+
+            // Validate required fields
+            if (!purchasePrice || !downPaymentPercentage || !interestRate || !loanTerm || !monthlyIncome) {
+                dtiErrorMessage.textContent = 'Please fill in all required fields.';
+                return;
+            }
+
+            // Calculate Loan Amount
+            const loanAmount = calculateLoanAmount(purchasePrice, downPaymentPercentage);
+            document.getElementById('loanAmount').value = formatNumber(loanAmount.toFixed(2));
+
+            // Calculate Monthly Taxes
+            const monthlyTaxes = calculateMonthlyTaxes(purchasePrice);
+            document.getElementById('monthlyTaxes').value = formatNumber(monthlyTaxes.toFixed(2));
+
+            // Calculate PMI
+            const pmi = calculatePMI(loanAmount);
+            document.getElementById('pmi').value = formatNumber(pmi.toFixed(2));
+
+            // Calculate Monthly Mortgage Payment
+            const totalMonthlyPayment = calculateMortgagePayment();
+            document.getElementById('monthlyPaymentResult').textContent = `Estimated Monthly Payment: $${formatNumber(totalMonthlyPayment.toFixed(2))}`;
+
+            // Calculate Total Monthly Debts
+            let totalDebtPayments = 0;
+            const debtItems = document.querySelectorAll('#debtsContainer .debt-item');
+            debtItems.forEach(debtItem => {
+                const status = debtItem.querySelector('select').value;
+                if (status === 'Keep') {
+                    const monthlyPayment = parseNumber(debtItem.querySelector('input:nth-child(2)').value);
+                    totalDebtPayments += monthlyPayment;
+                }
+            });
+
+            // Calculate DTI
+            const totalMonthlyObligations = totalMonthlyPayment + totalDebtPayments;
+            const dti = ((totalMonthlyObligations / parseNumber(monthlyIncome)) * 100).toFixed(2);
+
+            document.getElementById('dtiResult').textContent = `Debt-to-Income Ratio (DTI): ${dti}%`;
+        }
+
+        // Function to Add a Chat Message to Chatbox
+        function addChatMessage(sender, message) {
+            const chatbox = document.getElementById('chatbox');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}`;
+
+            if (sender === 'ai') {
+                // Render Markdown for AI responses
+                const htmlContent = marked.parse(message);
+                messageDiv.innerHTML = `<p>${htmlContent}</p>`;
+            } else {
+                messageDiv.innerHTML = `<p>${sanitizeHTML(message)}</p>`;
+            }
+
+            chatbox.appendChild(messageDiv);
+            chatbox.scrollTop = chatbox.scrollHeight;
+        }
+
+        // Simple Sanitization to Prevent XSS
+        function sanitizeHTML(str) {
+            const temp = document.createElement('div');
+            temp.textContent = str;
+            return temp.innerHTML;
+        }
+
+        // Initial Setup
+        window.onload = function() {
+            // Add one default debt field
+            addDebt();
+
+            // Calculate initial values
+            calculateDTI();
+        };
+    </script>
+</body>
+</html>
