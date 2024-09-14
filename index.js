@@ -32,6 +32,7 @@ const anthropic = new Anthropic({
 // File paths
 const usersFilePath = path.join(__dirname, 'users.json');
 const interactionsFilePath = path.join(__dirname, 'interactions.json');
+const faqsFilePath = path.join(__dirname, 'faqs.json');
 
 // Utility functions
 async function readJsonFile(filePath) {
@@ -92,11 +93,24 @@ app.post('/api/chat', async (req, res) => {
 
     user.conversationHistory.push({ role: 'user', content: message });
 
-    // Construct the prompt with conversation history
-    let prompt = `You are a helpful assistant for Secure Mortgage, providing information about mortgages and home loans. Be concise, friendly, and format your responses in Markdown. The user's name is ${user.firstName}. Use previous interactions to personalize your responses. Prioritize security and confidentiality in all discussions.\n\n`;
+    // Load FAQs
+    const faqs = await readJsonFile(faqsFilePath);
 
-    // Limit conversation history to last 10 messages
-    const conversationHistory = user.conversationHistory.slice(-10);
+    // Check if the message matches any FAQs
+    const faqMatch = faqs.find(faq => message.toLowerCase().includes(faq.question.toLowerCase()));
+    if (faqMatch) {
+      const aiReply = faqMatch.answer;
+      user.conversationHistory.push({ role: 'assistant', content: aiReply });
+      await writeJsonFile(usersFilePath, users);
+      await logInteraction(userId, message, aiReply);
+      return res.json({ reply: aiReply });
+    }
+
+    // Construct the prompt with conversation history
+    let prompt = `You are a knowledgeable mortgage assistant for Secure Mortgage, providing expert information about mortgages, home loans, and related financial services. Be professional, friendly, and format your responses in Markdown. The user's name is ${user.firstName}. Use previous interactions to personalize your responses. Prioritize security, confidentiality, and accuracy in all discussions.\n\n`;
+
+    // Limit conversation history to last 15 messages
+    const conversationHistory = user.conversationHistory.slice(-15);
 
     for (const msg of conversationHistory) {
       if (msg.role === 'user') {
@@ -125,6 +139,17 @@ app.post('/api/chat', async (req, res) => {
   } catch (error) {
     console.error('Error in chat:', error);
     res.status(500).json({ error: 'An error occurred while processing your request' });
+  }
+});
+
+// FAQs endpoint
+app.get('/api/faqs', async (req, res) => {
+  try {
+    const faqs = await readJsonFile(faqsFilePath);
+    res.json(faqs);
+  } catch (error) {
+    console.error('Error fetching FAQs:', error);
+    res.status(500).json({ error: 'Failed to fetch FAQs' });
   }
 });
 
