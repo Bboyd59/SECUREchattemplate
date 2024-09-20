@@ -2,252 +2,257 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Secure Mortgage Assistant</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Include Google Fonts and Font Awesome -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <!-- Include the Markdown Parser Library -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <title>Secure Choice Lending Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS Variables */
         :root {
-            --primary-color: #4A90E2;
-            --secondary-color: #50E3C2;
-            --background-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            --card-bg-color: rgba(255, 255, 255, 0.2);
-            --chat-bg-color: rgba(255, 255, 255, 0.1);
-            --user-message-bg: #4A90E2;
-            --assistant-message-bg: linear-gradient(90deg, rgba(0,41,255,1) 0%, rgba(27,63,156,1) 0%, rgba(0,30,111,1) 93%);
-            --text-color: #FFFFFF;
-            --font-family: 'Roboto', sans-serif;
+            --bg-color: #0a192f;
+            --panel-bg: rgba(16, 32, 64, 0.8);
+            --text-color: #e6f1ff;
+            --primary-blue: #64ffda;
+            --secondary-blue: #5ccfee;
+            --accent-blue: #5eead4;
+            --glow-color: rgba(94, 234, 212, 0.3);
         }
 
-        /* Global Styles */
         * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
 
         body {
-            margin: 0;
-            padding: 0;
-            background: var(--background-gradient);
-            font-family: var(--font-family);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
             color: var(--text-color);
-            min-height: 100vh;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
         }
 
         .container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            max-width: 800px;
-            margin: 0 auto;
+            width: 100%;
+            max-width: 400px;
+            background: var(--panel-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 40px var(--glow-color);
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
             padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--primary-blue), transparent);
         }
 
         h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 2.5em;
-            font-weight: 700;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
         }
 
-        /* Card Styles */
-        .card {
-            background-color: var(--card-bg-color);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            margin-bottom: 30px;
-        }
-
-        .card h2 {
-            margin-top: 0;
-            font-size: 1.8em;
-            font-weight: 500;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .card input {
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1em;
-            color: #333;
-        }
-
-        .card button {
-            width: 100%;
-            padding: 15px;
-            background: var(--primary-color);
-            border: none;
-            border-radius: 8px;
-            font-size: 1.2em;
-            color: #fff;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .card button:hover {
-            background: #357ABD;
-        }
-
-        /* Chat Styles */
-        #chatbox {
-            flex: 1;
-            background-color: var(--chat-bg-color);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 20px;
+        .chat-container {
+            height: 400px;
             overflow-y: auto;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
-            margin-bottom: 20px;
+            padding: 20px;
         }
 
         .message {
+            margin-bottom: 15px;
             display: flex;
-            margin-bottom: 20px;
-            align-items: flex-end;
+            flex-direction: column;
         }
 
-        .message.user {
-            flex-direction: row-reverse;
-        }
-
-        .message .bubble {
-            max-width: 70%;
-            padding: 15px;
-            border-radius: 20px;
+        .message-content {
+            max-width: 80%;
+            padding: 10px 15px;
+            border-radius: 18px;
+            font-size: 0.9rem;
+            line-height: 1.4;
             position: relative;
-            font-size: 1em;
-            line-height: 1.5;
-            word-wrap: break-word;
-            color: #fff;
         }
 
-        .message.user .bubble {
-            background: var(--user-message-bg);
+        .user-message .message-content {
+            align-self: flex-end;
+            background-color: var(--secondary-blue);
+            color: var(--bg-color);
             border-bottom-right-radius: 0;
         }
 
-        .message.ai .bubble {
-            background: var(--assistant-message-bg);
+        .assistant-message .message-content {
+            align-self: flex-start;
+            background-color: var(--panel-bg);
+            border: 1px solid var(--accent-blue);
             border-bottom-left-radius: 0;
         }
 
-        .message .avatar {
+        .input-container {
+            display: flex;
+            padding: 15px;
+            background-color: rgba(16, 32, 64, 0.9);
+        }
+
+        #user-input {
+            flex-grow: 1;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 20px;
+            padding: 10px 15px;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        #user-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--accent-blue);
+        }
+
+        #send-button {
+            background-color: var(--primary-blue);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 50%;
             width: 40px;
             height: 40px;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 10px;
-            font-size: 1.2em;
-        }
-
-        /* Chat Input Styles */
-        #chat-input-container {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            background-color: var(--card-bg-color);
-            backdrop-filter: blur(10px);
-            border-radius: 10px;
-        }
-
-        #userInput {
-            flex: 1;
-            padding: 15px;
-            font-size: 1em;
-            border: none;
-            border-radius: 8px;
-            margin-right: 10px;
-            color: #333;
-        }
-
-        #sendButton {
-            padding: 15px 20px;
-            background: var(--primary-color);
-            border: none;
-            border-radius: 8px;
-            font-size: 1.2em;
-            color: #fff;
+            margin-left: 10px;
             cursor: pointer;
-            transition: background 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
         }
 
-        #sendButton:hover {
-            background: #357ABD;
+        #send-button:hover {
+            background-color: var(--accent-blue);
+            transform: scale(1.05);
         }
 
-        /* Scrollbar Styles */
-        #chatbox::-webkit-scrollbar {
-            width: 8px;
+        #send-button i {
+            font-size: 1.2rem;
         }
 
-        #chatbox::-webkit-scrollbar-thumb {
-            background-color: rgba(255, 255, 255, 0.3);
-            border-radius: 4px;
+        .glow-effect {
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: inherit;
+            background: var(--glow-color);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
 
-        /* Responsive Design */
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2em;
+        .message-content:hover .glow-effect {
+            opacity: 1;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message {
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        /* Scrollbar styling */
+        .chat-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chat-container::-webkit-scrollbar-thumb {
+            background-color: var(--accent-blue);
+            border-radius: 3px;
+        }
+
+        /* Registration form styles */
+        #registration {
+            padding: 20px;
+        }
+
+        #registration input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-color);
+        }
+
+        #registration button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--primary-blue);
+            color: var(--bg-color);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #registration button:hover {
+            background-color: var(--accent-blue);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                height: 100vh;
+                border-radius: 0;
             }
 
-            .card {
-                padding: 20px;
-            }
-
-            .message .bubble {
-                max-width: 100%;
+            .chat-container {
+                height: calc(100vh - 140px);
             }
         }
-    </style>
+     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Secure Mortgage Assistant</h1>
-
-        <!-- Registration Card -->
-        <div id="registration" class="card">
-            <h2>Welcome to Secure Mortgage</h2>
+        <div class="header">
+            <h1>Secure Choice Lending Assistant</h1>
+        </div>
+        <div id="registration">
             <input type="text" id="fullName" placeholder="Full Name" required>
             <input type="tel" id="phone" placeholder="Phone" required>
             <input type="email" id="email" placeholder="Email" required>
             <button onclick="register()">Register</button>
         </div>
-
-        <!-- Chat Interface -->
         <div id="chatInterface" style="display: none;">
-            <!-- Chatbox -->
-            <div id="chatbox">
-                <!-- Messages will be appended here -->
+            <div id="chat-container" class="chat-container">
+                <!-- Chat messages will be inserted here -->
             </div>
-            <!-- Chat Input -->
-            <div id="chat-input-container">
-                <input type="text" id="userInput" placeholder="Type your message..." autocomplete="off">
-                <button id="sendButton"><i class="fas fa-paper-plane"></i></button>
+            <div class="input-container">
+                <input type="text" id="user-input" placeholder="Type your message...">
+                <button id="send-button">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
             </div>
         </div>
     </div>
-
-    <!-- Optional Footer -->
-    <!-- <footer>
-        <!-- Add any footer content here -->
-    <!-- </footer> -->
-
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
         let userId;
         let userFirstName = '';
@@ -262,7 +267,6 @@
                 return;
             }
 
-            // Extract first name from full name
             userFirstName = fullName.split(' ')[0];
 
             fetch('/api/register', {
@@ -278,9 +282,8 @@
                     userId = data.userId;
                     document.getElementById('registration').style.display = 'none';
                     document.getElementById('chatInterface').style.display = 'block';
-                    addMessage('ai', `Hello **${userFirstName}**! Welcome to Secure Mortgage. How can I assist you today with information about mortgages or home loans?`);
-                    // Focus on the input field
-                    document.getElementById('userInput').focus();
+                    addMessage('assistant', `Welcome to Secure Choice Lending, ${userFirstName}! How can I assist you today with information about mortgages or home loans?`);
+                    document.getElementById('user-input').focus();
                 } else {
                     alert('Registration failed. Please try again.');
                 }
@@ -291,15 +294,38 @@
             });
         }
 
+        function addMessage(sender, content) {
+            const chatContainer = document.getElementById('chat-container');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', `${sender}-message`);
+            
+            const messageContent = document.createElement('div');
+            messageContent.classList.add('message-content');
+            
+            if (sender === 'assistant') {
+                messageContent.innerHTML = marked.parse(content);
+            } else {
+                messageContent.textContent = content;
+            }
+            
+            const glowEffect = document.createElement('div');
+            glowEffect.classList.add('glow-effect');
+            
+            messageContent.appendChild(glowEffect);
+            messageDiv.appendChild(messageContent);
+            chatContainer.appendChild(messageDiv);
+            
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
         function sendMessage() {
-            const messageInput = document.getElementById('userInput');
-            const message = messageInput.value.trim();
+            const userInput = document.getElementById('user-input');
+            const message = userInput.value.trim();
             if (!message) return;
 
             addMessage('user', message);
-            messageInput.value = '';
+            userInput.value = '';
 
-            // Fetch assistant's response
             fetch('/api/chat', {
                 method: 'POST',
                 headers: {
@@ -310,44 +336,19 @@
             .then(response => response.json())
             .then(data => {
                 if (data.reply) {
-                    addMessage('ai', data.reply);
+                    addMessage('assistant', data.reply);
                 } else {
-                    addMessage('ai', 'Sorry, I encountered an error processing your request.');
+                    addMessage('assistant', 'Sorry, I encountered an error processing your request.');
                 }
             })
             .catch((error) => {
                 console.error('Error:', error);
-                addMessage('ai', 'Sorry, something went wrong. Please try again later.');
+                addMessage('assistant', 'Sorry, something went wrong. Please try again later.');
             });
         }
 
-        function addMessage(sender, message) {
-            const chatbox = document.getElementById('chatbox');
-            const messageWrapper = document.createElement('div');
-            messageWrapper.className = `message ${sender}`;
-
-            const bubble = document.createElement('div');
-            bubble.className = 'bubble';
-
-            if (sender === 'ai') {
-                // Render Markdown for assistant's messages
-                bubble.innerHTML = marked.parse(message);
-            } else {
-                bubble.textContent = message;
-            }
-
-            messageWrapper.appendChild(bubble);
-            chatbox.appendChild(messageWrapper);
-
-            // Auto-scroll to the bottom
-            chatbox.scrollTop = chatbox.scrollHeight;
-        }
-
-        // Event Listener for Send Button
-        document.getElementById('sendButton').addEventListener('click', sendMessage);
-
-        // Event Listener for Enter Key in Input Field
-        document.getElementById('userInput').addEventListener('keypress', function(event) {
+        document.getElementById('send-button').addEventListener('click', sendMessage);
+        document.getElementById('user-input').addEventListener('keypress', function(event) {
             if (event.key === 'Enter') {
                 event.preventDefault();
                 sendMessage();
@@ -355,4 +356,3 @@
         });
     </script>
 </body>
-</html>

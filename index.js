@@ -2,7 +2,7 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const { Anthropic } = require('@anthropic-ai/sdk');
+const OpenAI = require('openai');
 const fs = require('fs').promises;
 const path = require('path');
 const session = require('express-session');
@@ -24,9 +24,9 @@ app.use(session({
 
 app.use(express.static('.'));
 
-// Initialize Anthropic client
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY,
+// Initialize OpenAI client
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 // File paths
@@ -106,30 +106,26 @@ app.post('/api/chat', async (req, res) => {
       return res.json({ reply: aiReply });
     }
 
-    // Construct the prompt with conversation history
-    let prompt = `You are a knowledgeable mortgage assistant for Secure Mortgage, providing expert information about mortgages, home loans, and related financial services. Be professional, friendly, and format your responses in Markdown. The user's name is ${user.firstName}. Use previous interactions to personalize your responses. Prioritize security, confidentiality, and accuracy in all discussions.\n\n`;
+    // Prepare messages for OpenAI
+    const messages = [
+      { role: "system", content: `You are a knowledgeable mortgage assistant for Secure Choice Lending, providing expert information about mortgages and home loans. Your name is Secure Choice Lending Assistant. Communicate in a professional, friendly manner. Format your responses using Markdown for a clean, modern aesthetic:
+      - Use ## for main headers and ### for subheaders
+      - Use **bold** for emphasis on key points
+      - Use bullet points or numbered lists for multiple items
+      - Use > for important quotes or callouts
+      - Keep paragraphs short and concise
+      - Use \`code blocks\` for numerical examples or rates
+    The user's name is ${user.firstName}. Personalize your responses based on previous interactions.` },
+      ...user.conversationHistory.slice(-15)  // Limit to last 15 messages
+    ];
 
-    // Limit conversation history to last 15 messages
-    const conversationHistory = user.conversationHistory.slice(-15);
-
-    for (const msg of conversationHistory) {
-      if (msg.role === 'user') {
-        prompt += `Human: ${msg.content}\n`;
-      } else {
-        prompt += `Assistant: ${msg.content}\n`;
-      }
-    }
-
-    prompt += `Assistant:`;
-
-    const completion = await anthropic.completions.create({
-      model: 'claude-v1',
-      prompt: prompt,
-      max_tokens_to_sample: 1000,
-      stop_sequences: ['Human:', 'Assistant:'],
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages: messages,
+      max_tokens: 1000
     });
 
-    const aiReply = completion.completion.trim();
+    const aiReply = completion.choices[0].message.content.trim();
 
     user.conversationHistory.push({ role: 'assistant', content: aiReply });
     await writeJsonFile(usersFilePath, users);
@@ -156,5 +152,5 @@ app.get('/api/faqs', async (req, res) => {
 // Start the server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
-  console.log(`ANTHROPIC_API_KEY is ${process.env.ANTHROPIC_API_KEY ? 'set' : 'not set'}`);
+  console.log(`OPENAI_API_KEY is ${process.env.OPENAI_API_KEY ? 'set' : 'not set'}`);
 });
