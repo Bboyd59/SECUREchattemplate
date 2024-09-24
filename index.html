@@ -4,254 +4,254 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Choice Lending Assistant</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0a192f;
-            --panel-bg: rgba(16, 32, 64, 0.8);
-            --text-color: #e6f1ff;
-            --primary-blue: #64ffda;
-            --secondary-blue: #5ccfee;
-            --accent-blue: #5eead4;
-            --glow-color: rgba(94, 234, 212, 0.3);
+            --color-bg1: rgb(5, 10, 20);
+            --color-bg2: rgb(10, 20, 40);
+            --color1: 0, 191, 255;  /* Deep Sky Blue */
+            --color2: 30, 144, 255; /* Dodger Blue */
+            --color3: 0, 123, 255;  /* Blue */
+            --color4: 65, 105, 225; /* Royal Blue */
+            --color5: 138, 43, 226; /* Blue Violet */
+            --color-interactive: 0, 255, 255; /* Cyan */
+            --circle-size: 80%;
+            --blending: screen;
         }
 
-        * {
+        * { 
+            box-sizing: border-box; 
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            font-family: 'Montserrat', sans-serif;
+            background: var(--color-bg1);
+            color: #fff;
+            min-height: 100vh;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            padding: 20px;
         }
 
         .container {
             width: 100%;
-            max-width: 400px;
-            background: var(--panel-bg);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 0 40px var(--glow-color);
-            backdrop-filter: blur(10px);
+            max-width: 1200px;
+            height: 90vh;
+            padding: 2rem;
         }
 
-        .header {
-            padding: 20px;
-            text-align: center;
+        .card {
             position: relative;
-        }
-
-        .header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 10%;
-            right: 10%;
-            height: 2px;
-            background: linear-gradient(to right, transparent, var(--primary-blue), transparent);
-        }
-
-        h1 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--primary-blue);
-            margin-bottom: 10px;
-        }
-
-        .chat-container {
-            height: 400px;
-            overflow-y: auto;
-            padding: 20px;
-        }
-
-        .message {
-            margin-bottom: 15px;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            z-index: 2;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
             display: flex;
             flex-direction: column;
         }
 
-        .message-content {
-            max-width: 80%;
-            padding: 10px 15px;
-            border-radius: 18px;
-            font-size: 0.9rem;
-            line-height: 1.4;
-            position: relative;
-        }
-
-        .user-message .message-content {
-            align-self: flex-end;
-            background-color: var(--secondary-blue);
-            color: var(--bg-color);
-            border-bottom-right-radius: 0;
-        }
-
-        .assistant-message .message-content {
-            align-self: flex-start;
-            background-color: var(--panel-bg);
-            border: 1px solid var(--accent-blue);
-            border-bottom-left-radius: 0;
-        }
-
-        .input-container {
-            display: flex;
-            padding: 15px;
-            background-color: rgba(16, 32, 64, 0.9);
-        }
-
-        #user-input {
-            flex-grow: 1;
-            background-color: rgba(255, 255, 255, 0.1);
-            border: none;
-            border-radius: 20px;
-            padding: 10px 15px;
-            color: var(--text-color);
-            font-size: 0.9rem;
-        }
-
-        #user-input:focus {
-            outline: none;
-            box-shadow: 0 0 0 2px var(--accent-blue);
-        }
-
-        #send-button {
-            background-color: var(--primary-blue);
-            color: var(--bg-color);
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            margin-left: 10px;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.3s ease;
-        }
-
-        #send-button:hover {
-            background-color: var(--accent-blue);
-            transform: scale(1.05);
-        }
-
-        #send-button i {
-            font-size: 1.2rem;
-        }
-
-        .glow-effect {
+        .noise {
             position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            border-radius: inherit;
-            background: var(--glow-color);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.05;
             z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s ease;
         }
 
-        .message-content:hover .glow-effect {
-            opacity: 1;
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: rgba(var(--color1), 0.9);
+            text-shadow: 0 0 10px rgba(var(--color1), 0.5);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        input, button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 1rem;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1.1rem;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        button {
+            background: rgba(var(--color-interactive), 0.8);
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.1s ease;
+        }
+
+        button:hover {
+            background: rgba(var(--color-interactive), 1);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        #registration, #chatInterface {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .chat-container {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
         }
 
         .message {
-            animation: fadeIn 0.3s ease-out;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            max-width: 80%;
+            line-height: 1.5;
         }
 
-        /* Scrollbar styling */
-        .chat-container::-webkit-scrollbar {
-            width: 6px;
+        .user-message {
+            background: rgba(var(--color3), 0.3);
+            align-self: flex-end;
+            margin-left: auto;
         }
 
-        .chat-container::-webkit-scrollbar-track {
-            background: transparent;
+        .assistant-message {
+            background: rgba(var(--color2), 0.3);
+            align-self: flex-start;
         }
 
-        .chat-container::-webkit-scrollbar-thumb {
-            background-color: var(--accent-blue);
-            border-radius: 3px;
+        .assistant-message p {
+            margin-bottom: 1rem;
         }
 
-        /* Registration form styles */
-        #registration {
-            padding: 20px;
+        .assistant-message ul, .assistant-message ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
         }
 
-        #registration input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: var(--text-color);
+        .assistant-message li {
+            margin-bottom: 0.5rem;
         }
 
-        #registration button {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: var(--primary-blue);
-            color: var(--bg-color);
-            cursor: pointer;
-            transition: background-color 0.3s ease;
+        .gradient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
         }
 
-        #registration button:hover {
-            background-color: var(--accent-blue);
+        .gradients-container {
+            position: absolute;
+            inset: 0;
+            filter: url(#goo) blur(40px);
         }
 
-        @media (max-width: 480px) {
+        .g1, .g2, .g3, .g4, .g5, .interactive {
+            position: absolute;
+            width: var(--circle-size);
+            height: var(--circle-size);
+            border-radius: 50%;
+            mix-blend-mode: var(--blending);
+            will-change: transform;
+        }
+
+        .g1 { background: rgba(var(--color1), 0.8); left: 20%; top: 20%; }
+        .g2 { background: rgba(var(--color2), 0.8); right: 20%; top: 20%; }
+        .g3 { background: rgba(var(--color3), 0.8); left: 30%; bottom: 20%; }
+        .g4 { background: rgba(var(--color4), 0.8); right: 30%; bottom: 30%; }
+        .g5 { background: rgba(var(--color5), 0.8); left: 40%; bottom: 40%; }
+        .interactive { background: rgba(var(--color-interactive), 0.8); left: 50%; top: 50%; }
+
+        @media screen and (max-width: 768px) {
             .container {
+                padding: 1rem;
                 height: 100vh;
-                border-radius: 0;
             }
 
-            .chat-container {
-                height: calc(100vh - 140px);
+            .card {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+            }
+
+            input, button {
+                font-size: 1rem;
+                padding: 10px;
             }
         }
-     </style>
+    </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>Secure Choice Lending Assistant</h1>
-        </div>
-        <div id="registration">
-            <input type="text" id="fullName" placeholder="Full Name" required>
-            <input type="tel" id="phone" placeholder="Phone" required>
-            <input type="email" id="email" placeholder="Email" required>
-            <button onclick="register()">Register</button>
-        </div>
-        <div id="chatInterface" style="display: none;">
-            <div id="chat-container" class="chat-container">
-                <!-- Chat messages will be inserted here -->
+        <div class="card">
+            <svg viewBox="0 0 100% 100%" xmlns='http://www.w3.org/2000/svg' class="noise">
+                <filter id='noiseFilter'>
+                    <feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='6' stitchTiles='stitch' />
+                </filter>
+                <rect width='100%' height='100%' filter='url(#noiseFilter)' />
+            </svg>
+            <h1>Secure Choice Lending</h1>
+            <div id="registration">
+                <input type="text" id="fullName" placeholder="Full Name" required>
+                <input type="tel" id="phone" placeholder="Phone" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <button onclick="register()">Register</button>
             </div>
-            <div class="input-container">
+            <div id="chatInterface" style="display: none;">
+                <div class="chat-container"></div>
                 <input type="text" id="user-input" placeholder="Type your message...">
-                <button id="send-button">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
+                <button id="send-button">Send</button>
             </div>
         </div>
     </div>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <div class="gradient-bg">
+        <svg viewBox="0 0 100vw 100vw" xmlns='http://www.w3.org/2000/svg' class="noiseBg">
+            <filter id='noiseFilterBg'>
+                <feTurbulence type='fractalNoise' baseFrequency='0.6' stitchTiles='stitch' />
+            </filter>
+            <rect width='100%' height='100%' filter='url(#noiseFilterBg)' />
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" class="svgBlur">
+            <defs>
+                <filter id="goo">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+                    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" />
+                    <feBlend in="SourceGraphic" in2="goo" />
+                </filter>
+            </defs>
+        </svg>
+        <div class="gradients-container">
+            <div class="g1"></div>
+            <div class="g2"></div>
+            <div class="g3"></div>
+            <div class="g4"></div>
+            <div class="g5"></div>
+            <div class="interactive"></div>
+        </div>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
         let userId;
@@ -281,7 +281,7 @@
                 if (data.userId) {
                     userId = data.userId;
                     document.getElementById('registration').style.display = 'none';
-                    document.getElementById('chatInterface').style.display = 'block';
+                    document.getElementById('chatInterface').style.display = 'flex';
                     addMessage('assistant', `Welcome to Secure Choice Lending, ${userFirstName}! How can I assist you today with information about mortgages or home loans?`);
                     document.getElementById('user-input').focus();
                 } else {
@@ -295,26 +295,17 @@
         }
 
         function addMessage(sender, content) {
-            const chatContainer = document.getElementById('chat-container');
+            const chatContainer = document.querySelector('.chat-container');
             const messageDiv = document.createElement('div');
             messageDiv.classList.add('message', `${sender}-message`);
-            
-            const messageContent = document.createElement('div');
-            messageContent.classList.add('message-content');
-            
+
             if (sender === 'assistant') {
-                messageContent.innerHTML = marked.parse(content);
+                messageDiv.innerHTML = marked.parse(content);
             } else {
-                messageContent.textContent = content;
+                messageDiv.textContent = content;
             }
-            
-            const glowEffect = document.createElement('div');
-            glowEffect.classList.add('glow-effect');
-            
-            messageContent.appendChild(glowEffect);
-            messageDiv.appendChild(messageContent);
+
             chatContainer.appendChild(messageDiv);
-            
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
 
@@ -354,5 +345,29 @@
                 sendMessage();
             }
         });
+
+        // Interactive background
+        document.addEventListener('DOMContentLoaded', () => {
+            const interBubble = document.querySelector('.interactive');
+            let curX = 0;
+            let curY = 0;
+            let tgX = 0;
+            let tgY = 0;
+
+            const move = () => {
+                curX += (tgX - curX) / 20;
+                curY += (tgY - curY) / 20;
+                interBubble.style.transform = `translate(${Math.round(curX)}px, ${Math.round(curY)}px)`;
+                requestAnimationFrame(move);
+            };
+
+            window.addEventListener('mousemove', (event) => {
+                tgX = event.clientX;
+                tgY = event.clientY;
+            });
+
+            move();
+        });
     </script>
 </body>
+</html>
