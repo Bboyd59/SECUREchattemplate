@@ -1,5 +1,3 @@
-// index.js
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const OpenAI = require('openai');
@@ -120,7 +118,7 @@ app.post('/api/chat', async (req, res) => {
     ];
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-4o",
+      model: "gpt-4",
       messages: messages,
       max_tokens: 1000
     });

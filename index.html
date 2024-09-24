@@ -4,16 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Choice Lending Assistant</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-bg: #0f172a;
+            --color-bg: #02040c;
             --color-card: #1e293b;
             --color-text: #e2e8f0;
             --color-input: #334155;
             --color-button: #3b82f6;
             --color-user-message: #2563eb;
             --color-assistant-message: #475569;
+            --shiny-cta-bg: #000000;
+            --shiny-cta-bg-subtle: #1a1818;
+            --shiny-cta-fg: #ffffff;
+            --shiny-cta-highlight: blue;
+            --shiny-cta-highlight-subtle: #8484ff;
+        }
+
+        @property --gradient-angle {
+            syntax: "<angle>";
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        @property --gradient-angle-offset {
+            syntax: "<angle>";
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        @property --gradient-percent {
+            syntax: "<percentage>";
+            initial-value: 5%;
+            inherits: false;
+        }
+
+        @property --gradient-shine {
+            syntax: "<color>";
+            initial-value: white;
+            inherits: false;
         }
 
         * { 
@@ -31,6 +60,7 @@
             justify-content: center;
             align-items: center;
             padding: 2rem;
+            -webkit-font-smoothing: antialiased;
         }
 
         .container {
@@ -56,16 +86,13 @@
             font-weight: 600;
         }
 
-        input, button {
+        input {
             width: 100%;
             padding: 0.75rem 1rem;
             margin-bottom: 1rem;
             border: none;
             border-radius: 0.5rem;
             font-size: 1rem;
-        }
-
-        input {
             background-color: var(--color-input);
             color: var(--color-text);
         }
@@ -74,16 +101,139 @@
             color: #94a3b8;
         }
 
-        button {
-            background-color: var(--color-button);
-            color: white;
-            font-weight: 600;
+        .shiny-cta {
+            --animation: gradient-angle linear infinite;
+            --duration: 3s;
+            --shadow-size: 2px;
+            isolation: isolate;
+            position: relative;
+            overflow: hidden;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            outline-offset: 4px;
+            padding: 1rem 2rem;
+            font-family: inherit;
+            font-size: 1.125rem;
+            line-height: 1.2;
+            border: 1px solid transparent;
+            border-radius: 360px;
+            color: var(--shiny-cta-fg);
+            background: linear-gradient(var(--shiny-cta-bg), var(--shiny-cta-bg))
+                padding-box,
+              conic-gradient(
+                  from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+                  transparent,
+                  var(--shiny-cta-highlight) var(--gradient-percent),
+                  var(--gradient-shine) calc(var(--gradient-percent) * 2),
+                  var(--shiny-cta-highlight) calc(var(--gradient-percent) * 3),
+                  transparent calc(var(--gradient-percent) * 4)
+                )
+                border-box;
+            box-shadow: inset 0 0 0 1px var(--shiny-cta-bg-subtle);
+            width: 100%;
+            margin-top: 1rem;
         }
 
-        button:hover {
-            background-color: #2563eb;
+        .shiny-cta::before,
+        .shiny-cta::after,
+        .shiny-cta span::before {
+            content: "";
+            pointer-events: none;
+            position: absolute;
+            inset-inline-start: 50%;
+            inset-block-start: 50%;
+            translate: -50% -50%;
+            z-index: -1;
+        }
+
+        .shiny-cta:active {
+            translate: 0 1px;
+        }
+
+        .shiny-cta::before {
+            --size: calc(100% - var(--shadow-size) * 3);
+            --position: 2px;
+            --space: calc(var(--position) * 2);
+            width: var(--size);
+            height: var(--size);
+            background: radial-gradient(
+                circle at var(--position) var(--position),
+                white calc(var(--position) / 4),
+                transparent 0
+              )
+              padding-box;
+            background-size: var(--space) var(--space);
+            background-repeat: space;
+            mask-image: conic-gradient(
+              from calc(var(--gradient-angle) + 45deg),
+              black,
+              transparent 10% 90%,
+              black
+            );
+            border-radius: inherit;
+            opacity: 0.4;
+            z-index: -1;
+        }
+
+        .shiny-cta::after {
+            --animation: shimmer linear infinite;
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(
+              -50deg,
+              transparent,
+              var(--shiny-cta-highlight),
+              transparent
+            );
+            mask-image: radial-gradient(circle at bottom, transparent 40%, black);
+            opacity: 0.6;
+        }
+
+        .shiny-cta span {
+            z-index: 1;
+        }
+
+        .shiny-cta span::before {
+            --size: calc(100% + 1rem);
+            width: var(--size);
+            height: var(--size);
+            box-shadow: inset 0 -1ex 2rem 4px var(--shiny-cta-highlight);
+            opacity: 0;
+        }
+
+        .shiny-cta {
+            --transition: 800ms cubic-bezier(0.25, 1, 0.5, 1);
+            transition: var(--transition);
+            transition-property: --gradient-angle-offset, --gradient-percent,
+              --gradient-shine;
+        }
+
+        .shiny-cta,
+        .shiny-cta::before,
+        .shiny-cta::after {
+            animation: var(--animation) var(--duration),
+              var(--animation) calc(var(--duration) / 0.4) reverse paused;
+            animation-composition: add;
+        }
+
+        .shiny-cta span::before {
+            transition: opacity var(--transition);
+            animation: calc(var(--duration) * 1.5) breathe linear infinite;
+        }
+
+        .shiny-cta:is(:hover, :focus-visible) {
+            --gradient-percent: 20%;
+            --gradient-angle-offset: 95deg;
+            --gradient-shine: var(--shiny-cta-highlight-subtle);
+        }
+
+        .shiny-cta:is(:hover, :focus-visible),
+        .shiny-cta:is(:hover, :focus-visible)::before,
+        .shiny-cta:is(:hover, :focus-visible)::after {
+            animation-play-state: running;
+        }
+
+        .shiny-cta:is(:hover, :focus-visible) span::before {
+            opacity: 1;
         }
 
         #registration, #chatInterface {
@@ -150,9 +300,30 @@
                 margin-bottom: 1.5rem;
             }
 
-            input, button {
+            input, .shiny-cta {
                 font-size: 0.9rem;
                 padding: 0.6rem 0.8rem;
+            }
+        }
+
+        @keyframes gradient-angle {
+            to {
+                --gradient-angle: 360deg;
+            }
+        }
+
+        @keyframes shimmer {
+            to {
+                rotate: 360deg;
+            }
+        }
+
+        @keyframes breathe {
+            from, to {
+                scale: 1;
+            }
+            50% {
+                scale: 1.2;
             }
         }
     </style>
@@ -165,12 +336,16 @@
                 <input type="text" id="fullName" placeholder="Full Name" required>
                 <input type="tel" id="phone" placeholder="Phone" required>
                 <input type="email" id="email" placeholder="Email" required>
-                <button onclick="register()">Register</button>
+                <button class="shiny-cta" id="register-button">
+                    <span>Register Now</span>
+                </button>
             </div>
             <div id="chatInterface" style="display: none;">
                 <div class="chat-container"></div>
                 <input type="text" id="user-input" placeholder="Type your message...">
-                <button id="send-button">Send</button>
+                <button class="shiny-cta" id="send-button">
+                    <span>Send</span>
+                </button>
             </div>
         </div>
     </div>
@@ -178,6 +353,8 @@
     <script>
         let userId;
         let userFirstName = '';
+
+        document.getElementById('register-button').addEventListener('click', register);
 
         function register() {
             const fullName = document.getElementById('fullName').value.trim();
