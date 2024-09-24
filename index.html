@@ -7,8 +7,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-bg: #02040c;
-            --color-card: #1e293b;
+            --color-bg-start: #1a0033;  /* Deep purple */
+            --color-bg-end: #000000;    /* Black */
+            --color-card: rgba(30, 41, 59, 0.8);
             --color-text: #e2e8f0;
             --color-input: #334155;
             --color-button: #3b82f6;
@@ -53,7 +54,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--color-bg);
+            background: linear-gradient(135deg, var(--color-bg-start), var(--color-bg-end));
             color: var(--color-text);
             min-height: 100vh;
             display: flex;
@@ -71,12 +72,13 @@
 
         .card {
             background-color: var(--color-card);
+            backdrop-filter: blur(10px);
             border-radius: 1rem;
             padding: 2rem;
             height: 100%;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
         }
 
         h1 {
@@ -397,13 +399,13 @@
             const chatContainer = document.querySelector('.chat-container');
             const messageDiv = document.createElement('div');
             messageDiv.classList.add('message', `${sender}-message`);
-
+            
             if (sender === 'assistant') {
                 messageDiv.innerHTML = marked.parse(content);
             } else {
                 messageDiv.textContent = content;
             }
-
+            
             chatContainer.appendChild(messageDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }

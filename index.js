@@ -118,7 +118,7 @@ app.post('/api/chat', async (req, res) => {
     ];
 
     const completion = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-4o",
       messages: messages,
       max_tokens: 1000
     });

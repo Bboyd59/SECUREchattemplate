@@ -381,5 +381,26 @@
     "phone": "9516756893",
     "email": "brandonboyd50@icloud.com",
     "conversationHistory": []
+  },
+  "1727218614994": {
+    "firstName": "Brandon",
+    "phone": "9516756893",
+    "email": "brandonboyd50@icloud.com",
+    "conversationHistory": [
+      {
+        "role": "user",
+        "content": "what docs do i need"
+      },
+      {
+        "role": "assistant",
+        "content": "## Required Documents for a Mortgage Application\n\nHi Brandon! When applying for a mortgage, you'll need to gather several documents that verify your income, employment, assets, and debts. Here's a list to help you prepare:\n\n### Personal Identification\n- **Government-issued ID**: Driver's license or passport\n- **Social Security number**\n\n### Income Verification\n- **Pay stubs**: Last 30 days of pay stubs\n- **W-2 forms**: Past 2 years\n- **Tax returns**: Past 2 years (including all schedules)\n- **Proof of additional income** (if applicable): Documentation for bonuses, alimony, etc.\n\n### Employment Verification\n- **Letter of employment**: Confirming your job status and income\n- **Contact details**: Employer's contact information for verification\n\n### Assets\n- **Bank statements**: Last 2-3 months' statements from all accounts\n- **Investment account statements**: Including stocks, bonds, retirement accounts\n- **Proof of other assets**: Such as real estate or valuable personal property\n\n### Debts and Obligations\n- **Current loans**: Statements for student loans, car loans, or other personal loans\n- **Credit card statements**: Most recent\n- **Alimony or child support**: Documentation if applicable\n\n### Property Information (if you've selected a property)\n- **Purchase agreement**\n- **Property tax information**\n- **Homeowner's insurance**\n\n> **Pro Tip**: Keeping your documents organized and readily available will help expedite the mortgage approval process.\n\nDo you need more details on any specific document, or is there anything else I can assist you with, Brandon?\n\nSecure Choice Lending Assistant"
+      }
+    ]
+  },
+  "1727219238401": {
+    "firstName": "Brandon",
+    "phone": "9516756893",
+    "email": "brandonboyd50@icloud.com",
+    "conversationHistory": []
   }
 }
