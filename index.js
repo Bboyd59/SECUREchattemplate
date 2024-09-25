@@ -4,6 +4,7 @@ const OpenAI = require('openai');
 const fs = require('fs').promises;
 const path = require('path');
 const session = require('express-session');
+const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 require('dotenv').config();
 
 const app = express();
@@ -54,6 +55,19 @@ async function logInteraction(userId, userMessage, aiReply) {
   const interactions = await readJsonFile(interactionsFilePath);
   interactions.push({ timestamp: new Date().toISOString(), userId, userMessage, aiReply });
   await writeJsonFile(interactionsFilePath, interactions);
+}
+
+// Admin authentication middleware
+function authenticateAdmin(req, res, next) {
+  const adminPassword = process.env.ADMIN_PASSWORD || 'admin123'; // Set a secure password in your .env file
+  if (req.session.isAdmin) {
+    next();
+  } else if (req.body.password === adminPassword) {
+    req.session.isAdmin = true;
+    next();
+  } else {
+    res.status(401).send('Unauthorized');
+  }
 }
 
 // Routes
@@ -144,6 +158,52 @@ app.get('/api/faqs', async (req, res) => {
   } catch (error) {
     console.error('Error fetching FAQs:', error);
     res.status(500).json({ error: 'Failed to fetch FAQs' });
+  }
+});
+
+// Admin routes
+app.get('/admin', (req, res) => {
+  res.sendFile(path.join(__dirname, 'admin.html'));
+});
+
+app.post('/admin/login', authenticateAdmin, (req, res) => {
+  res.json({ success: true });
+});
+
+app.get('/admin/dashboard', authenticateAdmin, async (req, res) => {
+  try {
+    const users = await readJsonFile(usersFilePath);
+    res.json(Object.values(users));
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    res.status(500).json({ error: 'Failed to fetch users' });
+  }
+});
+
+app.get('/admin/export-csv', authenticateAdmin, async (req, res) => {
+  try {
+    const users = await readJsonFile(usersFilePath);
+    const csvWriter = createCsvWriter({
+      path: 'users_export.csv',
+      header: [
+        { id: 'firstName', title: 'First Name' },
+        { id: 'phone', title: 'Phone' },
+        { id: 'email', title: 'Email' }
+      ]
+    });
+
+    await csvWriter.writeRecords(Object.values(users));
+    res.download('users_export.csv', 'users_export.csv', (err) => {
+      if (err) {
+        console.error('Error downloading file:', err);
+        res.status(500).send('Error downloading file');
+      }
+      // Delete the file after download
+      fs.unlink('users_export.csv');
+    });
+  } catch (error) {
+    console.error('Error exporting users:', error);
+    res.status(500).json({ error: 'Failed to export users' });
   }
 });
 
