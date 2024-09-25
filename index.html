@@ -5,20 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secure Choice Lending Assistant</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
     <style>
         :root {
-            --color-bg: #02040c;
-            --color-card: #1e293b;
+            --color-bg: rgba(2, 4, 12, 0.5);
+            --color-card: rgba(30, 41, 59, 0.4);
             --color-text: #e2e8f0;
-            --color-input: #334155;
+            --color-input: rgba(51, 65, 85, 0.6);
             --color-button: #3b82f6;
-            --color-user-message: #2563eb;
-            --color-assistant-message: #475569;
-            --shiny-cta-bg: #000000;
-            --shiny-cta-bg-subtle: #1a1818;
+            --color-user-message: rgba(37, 99, 235, 0.6);
+            --color-assistant-message: rgba(71, 85, 105, 0.6);
+            --shiny-cta-bg: rgba(0, 0, 0, 0.5);
+            --shiny-cta-bg-subtle: rgba(26, 24, 24, 0.5);
             --shiny-cta-fg: #ffffff;
             --shiny-cta-highlight: blue;
-            --shiny-cta-highlight-subtle: #8484ff;
+            --shiny-cta-highlight-subtle: rgba(132, 132, 255, 0.5);
         }
 
         @property --gradient-angle {
@@ -53,7 +54,9 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--color-bg);
+            background-image: url("https://images.unsplash.com/photo-1693407549523-9a75912e828b?q=80&w=1637&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+            background-position: center center;
+            background-size: cover;
             color: var(--color-text);
             min-height: 100vh;
             display: flex;
@@ -67,6 +70,11 @@
             width: 100%;
             max-width: 1000px;
             height: 80vh;
+            background: linear-gradient(to right top, rgba(49, 49, 49, 0.7), rgba(239, 239, 239, 0.3));
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(240, 240, 240, 0.1);
+            border-radius: 24px;
+            overflow: hidden;
         }
 
         .card {

@@ -91,5 +91,55 @@
     "phone": "9516756893",
     "email": "brandonboyd50@icloud.com",
     "conversationHistory": []
+  },
+  "1727295056396": {
+    "firstName": "Brandon",
+    "phone": "9516756893",
+    "email": "brandonboyd50@icloud.com",
+    "conversationHistory": []
+  },
+  "1727304937590": {
+    "firstName": "Brandon",
+    "phone": "9516756893",
+    "email": "brandonboyd50@icloud.com",
+    "conversationHistory": [
+      {
+        "role": "user",
+        "content": "hello"
+      },
+      {
+        "role": "assistant",
+        "content": "Hello, Brandon!\n\nWelcome back to Secure Choice Lending. How can I assist you with your mortgage or home loan needs today?\n\n## How Can I Help You Today?\n\nWhether you have questions about:\n\n- **Getting Pre-Approved**\n- **Refinancing Options**\n- **Interest Rates**\n- **Loan Types**\n\nI'm here to provide the information you need. Let me know how I can assist you!"
+      },
+      {
+        "role": "user",
+        "content": "what docs do i need"
+      },
+      {
+        "role": "assistant",
+        "content": "Absolutely, Brandon! Here’s a list of the essential documents you generally need when applying for a mortgage:\n\n## Required Documents for a Mortgage Application\n\n### Personal Identification\n\n- **Government-Issued ID:** Driver’s license or passport\n- **Social Security Number**\n\n### Income Verification\n\n- **Pay Stubs:** Most recent, covering the last 30 days\n- **Tax Returns:** Typically the last 2 years\n- **W-2 Forms:** For the past 2 years\n\n### Employment Verification\n\n- **Employer Contact Information:** For reference and verification\n- **Letter of Employment:** If required by the lender\n\n### Asset Information\n\n- **Bank Statements:** Last 2-3 months\n- **Investment Account Statements:** Last 2-3 months, if applicable\n- **Retirement Account Statements:** 401(k), IRA, etc.\n\n### Debt Information\n\n- **Current Loan Statements:** For any outstanding loans such as car, student, or personal loans\n- **Credit Card Statements:** Most recent\n\n### Property Information\n\n- **Purchase Agreement:** If you have already chosen a property\n- **Proof of Earnest Money Deposit:** If applicable\n\n### Additional Documents (if applicable)\n\n- **Divorce Decree:** If applicable, to show alimony or child support obligations or income\n- **Bankruptcy Discharge Papers:** If you've declared bankruptcy in the past\n\n> **Tip:** It's always a good idea to keep both digital and physical copies of these documents readily available.\n\nLet me know if you need any more specific information, Brandon!"
+      }
+    ]
+  },
+  "1727304998973": {
+    "firstName": "Brandon",
+    "phone": "9516756893",
+    "email": "brandonboyd50@icloud.com",
+    "conversationHistory": []
+  },
+  "1727305019301": {
+    "firstName": "Brandon",
+    "phone": "9516756893",
+    "email": "brandonboyd50@icloud.com",
+    "conversationHistory": [
+      {
+        "role": "user",
+        "content": "what docs do i need"
+      },
+      {
+        "role": "assistant",
+        "content": "## Documents Required for a Mortgage Application\n\nHi Brandon,\n\nWhen applying for a mortgage, there are several key documents you will need to provide. Ensuring that you have these prepared will help to streamline the application process. Here are the essential documents typically required:\n\n### Personal Identification\n- **Government-issued ID**: This could be a driver's license, passport, or state ID.\n\n### Income Verification\n- **Pay stubs**: Most recent ones, usually covering the last 30 days.\n- **W-2 forms**: From the past two years.\n- **Tax returns**: Complete returns from the past two years.\n- **Bank statements**: Typically for the last two to three months.\n- **Employment verification**: A letter from your employer or recent employment history.\n\n### Credit History\n- **Credit report**: The lender will typically pull this for you, but knowing your credit score beforehand is helpful.\n\n### Asset Verification\n- **Bank statements**: Covering the last two to three months for all accounts (checking, savings, retirement, etc.).\n- **Proof of other assets**: Stocks, bonds, or any other investments you have.\n- **Gift letters**: If you are receiving a gift to help with the down payment, a letter from the donor stating the money is a gift and not a loan.\n\n### Property Information\n- **Purchase agreement**: If you have one.\n- **Property details**: For refinances or second mortgages, information about the property.\n\n### Debt Information\n- **Loan statements**: For any cars, student loans, or other debts you have.\n- **Credit card statements**: Most recent statements for all credit cards.\n\n### Additional Documentation (If Applicable)\n- **Business tax returns**: If you are self-employed, provide business tax returns for at least two years.\n- **Divorce decree**: If applicable, outlining any alimony or child support payments.\n\n> **Note**: Different lenders can require different documents based on your unique financial situation. It's always a good idea to check with your specific lender for their detailed list.\n\nIf you have any further questions or need additional information, please don't hesitate to reach out!\n\nBest,\nSecure Choice Lending Assistant"
+      }
+    ]
   }
 }
