@@ -22,6 +22,12 @@
             --shiny-cta-highlight-subtle: rgba(132, 132, 255, 0.5);
         }
 
+        @property --angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+
         * { 
             box-sizing: border-box; 
             margin: 0;
@@ -98,21 +104,41 @@
         }
 
         .shiny-cta {
-            isolation: isolate;
+            --button-bg: oklch(59% 56% 259deg);
+            --button-shine: white;
+            background-image: 
+                linear-gradient(var(--button-bg), var(--button-bg)),
+                conic-gradient(
+                    from var(--angle),
+                    var(--button-bg),
+                    var(--button-shine) 10%,
+                    var(--button-bg) 20%
+                );
+            background-position: center;
+            background-size: 100% 100%, 200% 200%;
+            background-clip: padding-box, border-box;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            color: white;
+            padding: 1rem 2rem;
+            font-size: 1.125rem;
+            cursor: pointer;
             position: relative;
             overflow: hidden;
-            cursor: pointer;
-            outline-offset: 4px;
-            padding: 1rem 2rem;
-            font-family: inherit;
-            font-size: 1.125rem;
-            line-height: 1.2;
-            border: 1px solid transparent;
-            border-radius: 360px;
-            color: var(--shiny-cta-fg);
-            background-color: var(--color-button);
             width: 100%;
             margin-top: 1rem;
+            animation: rotate 3s linear infinite;
+        }
+
+        .shiny-cta span {
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes rotate {
+            to {
+                --angle: 360deg;
+            }
         }
 
         #registration, #chatInterface {
@@ -206,6 +232,8 @@
         .input-area .shiny-cta {
             width: auto;
             margin-top: 0;
+            font-size: 1rem;
+            padding: 0.75rem 1.5rem;
         }
 
         @keyframes dots {
@@ -376,7 +404,7 @@
                 } else {
                     addMessage('assistant', 'Sorry, I encountered an error processing your request.');
                 }
-                
+
                 // Ensure the chat interface and input area remain visible
                 document.getElementById('chatInterface').style.display = 'flex';
                 document.querySelector('.input-area').style.display = 'flex';
@@ -386,7 +414,7 @@
                 // Hide loading animation
                 document.querySelector('.loading').style.display = 'none';
                 addMessage('assistant', 'Sorry, something went wrong. Please try again later.');
-                
+
                 // Ensure the chat interface and input area remain visible
                 document.getElementById('chatInterface').style.display = 'flex';
                 document.querySelector('.input-area').style.display = 'flex';
