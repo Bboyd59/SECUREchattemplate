@@ -287,9 +287,15 @@
                 margin-bottom: 1rem;
             }
 
-            #chatInterface {
+            #registration {
                 flex: 1;
                 display: flex;
+                flex-direction: column;
+            }
+
+            #chatInterface {
+                display: none;
+                flex: 1;
                 flex-direction: column;
                 overflow: hidden;
             }
@@ -382,14 +388,23 @@
         function adjustForMobile() {
             if (isMobile()) {
                 document.body.classList.add('mobile');
+                const registration = document.getElementById('registration');
                 const chatInterface = document.getElementById('chatInterface');
-                const inputArea = document.querySelector('.input-area');
                 const mobileFooter = document.querySelector('.mobile-footer');
 
-                chatInterface.style.height = `calc(100vh - ${inputArea.offsetHeight + mobileFooter.offsetHeight}px)`;
-                
-                const chatContainer = document.querySelector('.chat-container');
-                chatContainer.style.height = `calc(100% - ${inputArea.offsetHeight}px)`;
+                if (registration.style.display !== 'none') {
+                    chatInterface.style.display = 'none';
+                    registration.style.flex = '1';
+                    registration.style.display = 'flex';
+                    registration.style.flexDirection = 'column';
+                } else {
+                    chatInterface.style.display = 'flex';
+                    const inputArea = document.querySelector('.input-area');
+                    chatInterface.style.height = `calc(100vh - ${inputArea.offsetHeight + mobileFooter.offsetHeight}px)`;
+                    
+                    const chatContainer = document.querySelector('.chat-container');
+                    chatContainer.style.height = `calc(100% - ${inputArea.offsetHeight}px)`;
+                }
 
                 // Ensure the input field is clear
                 document.getElementById('user-input').value = '';
