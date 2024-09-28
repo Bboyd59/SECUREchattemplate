@@ -2,24 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Roquet's Mortgage A[i]ssistant</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
     <style>
         :root {
             --color-bg: rgba(2, 4, 12, 0.5);
-            --color-card: rgba(30, 41, 59, 0.4);
+            --color-card: rgba(30, 41, 59, 0.8);
             --color-text: #e2e8f0;
             --color-input: rgba(51, 65, 85, 0.6);
             --color-button: #3b82f6;
             --color-user-message: rgba(37, 99, 235, 0.6);
             --color-assistant-message: rgba(71, 85, 105, 0.6);
-            --shiny-cta-bg: rgba(0, 0, 0, 0.5);
-            --shiny-cta-bg-subtle: rgba(26, 24, 24, 0.5);
-            --shiny-cta-fg: #ffffff;
-            --shiny-cta-highlight: blue;
-            --shiny-cta-highlight-subtle: rgba(132, 132, 255, 0.5);
         }
 
         @property --angle {
@@ -39,6 +33,7 @@
             background-image: url("https://images.unsplash.com/photo-1693407549523-9a75912e828b?q=80&w=1637&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
             background-position: center center;
             background-size: cover;
+            background-attachment: fixed;
             color: var(--color-text);
             min-height: 100vh;
             display: flex;
@@ -148,6 +143,10 @@
             overflow: hidden;
         }
 
+        #chatInterface {
+            display: none;
+        }
+
         .chat-container {
             flex-grow: 1;
             overflow-y: auto;
@@ -219,21 +218,22 @@
         .input-area {
             display: flex;
             gap: 10px;
-            padding: 10px;
+            margin-top: auto;
+            position: relative;
+            z-index: 10;
             background-color: var(--color-card);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .input-area input {
             flex-grow: 1;
             margin-bottom: 0;
+            background-color: var(--color-input);
+            color: var(--color-text);
         }
 
         .input-area .shiny-cta {
             width: auto;
             margin-top: 0;
-            font-size: 1rem;
-            padding: 0.75rem 1.5rem;
         }
 
         @keyframes dots {
@@ -263,25 +263,76 @@
 
         @media screen and (max-width: 768px) {
             body {
-                padding: 1rem;
+                padding: 0;
             }
 
             .container {
-                height: 90vh;
+                width: 100vw;
+                max-width: 100vw;
+                height: 100vh;
+                border-radius: 0;
+                padding: 0;
             }
 
             .card {
                 padding: 1rem;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                border-radius: 0;
             }
 
             h1 {
                 font-size: 1.5rem;
-                margin-bottom: 1.5rem;
+                margin-bottom: 1rem;
             }
 
-            input, .shiny-cta {
+            #chatInterface {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+            }
+
+            .chat-container {
+                flex: 1;
+                overflow-y: auto;
+                margin-bottom: 0.5rem;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .message {
+                max-width: 90%;
                 font-size: 0.9rem;
-                padding: 0.6rem 0.8rem;
+            }
+
+            .input-area {
+                position: sticky;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background-color: var(--color-card);
+                padding: 0.5rem;
+                z-index: 10;
+            }
+
+            .input-area input {
+                font-size: 16px;
+            }
+
+            .input-area .shiny-cta {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .disclaimer,
+            .contact-info {
+                font-size: 0.6rem;
+                padding: 0.25rem;
+            }
+
+            .mobile-footer {
+                margin-top: auto;
             }
         }
     </style>
@@ -298,7 +349,7 @@
                     <span>Register Now</span>
                 </button>
             </div>
-            <div id="chatInterface" style="display: none;">
+            <div id="chatInterface">
                 <div class="chat-container"></div>
                 <div class="loading">AI is thinking</div>
                 <div class="input-area">
@@ -308,12 +359,14 @@
                     </button>
                 </div>
             </div>
-            <div class="disclaimer">
-                Disclaimer: The calculations provided by this application are for informational purposes only and do not constitute a credit approval, loan offer, or guarantee of qualification. Actual loan approval is subject to underwriting guidelines, credit approval, and lender discretion. Please consult with a mortgage professional for further assistance.
-            </div>
-            <div class="contact-info">
-                Joey Roquet, Executive Vice President | NMLS 913215 | 951.830.1937 | Joey@SecureChoiceLending<br>
-                1650 Spruce St. Suite 500 Riverside, CA 92507
+            <div class="mobile-footer">
+                <div class="disclaimer">
+                    Disclaimer: The calculations provided by this application are for informational purposes only and do not constitute a credit approval, loan offer, or guarantee of qualification. Actual loan approval is subject to underwriting guidelines, credit approval, and lender discretion. Please consult with a mortgage professional for further assistance.
+                </div>
+                <div class="contact-info">
+                    Joey Roquet, Executive Vice President | NMLS 913215 | 951.830.1937 | Joey@SecureChoiceLending<br>
+                    1650 Spruce St. Suite 500 Riverside, CA 92507
+                </div>
             </div>
         </div>
     </div>
@@ -321,6 +374,27 @@
     <script>
         let userId;
         let userFirstName = '';
+
+        function isMobile() {
+            return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        }
+
+        function adjustForMobile() {
+            if (isMobile()) {
+                document.body.classList.add('mobile');
+                const chatInterface = document.getElementById('chatInterface');
+                const inputArea = document.querySelector('.input-area');
+                const mobileFooter = document.querySelector('.mobile-footer');
+
+                chatInterface.style.height = `calc(100vh - ${inputArea.offsetHeight + mobileFooter.offsetHeight}px)`;
+                
+                const chatContainer = document.querySelector('.chat-container');
+                chatContainer.style.height = `calc(100% - ${inputArea.offsetHeight}px)`;
+
+                // Ensure the input field is clear
+                document.getElementById('user-input').value = '';
+            }
+        }
 
         document.getElementById('register-button').addEventListener('click', register);
 
@@ -351,6 +425,7 @@
                     document.getElementById('chatInterface').style.display = 'flex';
                     addMessage('assistant', `Welcome to Roquet's Mortgage A[i]ssistant, ${userFirstName}! How can I assist you today with information about mortgages or home loans?`);
                     document.getElementById('user-input').focus();
+                    adjustForMobile();
                 } else {
                     alert('Registration failed. Please try again.');
                 }
@@ -374,6 +449,12 @@
 
             chatContainer.appendChild(messageDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            if (isMobile()) {
+                setTimeout(() => {
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }, 0);
+            }
         }
 
         function sendMessage() {
@@ -384,7 +465,6 @@
             addMessage('user', message);
             userInput.value = '';
 
-            // Show loading animation
             document.querySelector('.loading').style.display = 'block';
 
             fetch('/api/chat', {
@@ -396,28 +476,17 @@
             })
             .then(response => response.json())
             .then(data => {
-                // Hide loading animation
                 document.querySelector('.loading').style.display = 'none';
-
                 if (data.reply) {
                     addMessage('assistant', data.reply);
                 } else {
                     addMessage('assistant', 'Sorry, I encountered an error processing your request.');
                 }
-
-                // Ensure the chat interface and input area remain visible
-                document.getElementById('chatInterface').style.display = 'flex';
-                document.querySelector('.input-area').style.display = 'flex';
             })
             .catch((error) => {
                 console.error('Error:', error);
-                // Hide loading animation
                 document.querySelector('.loading').style.display = 'none';
                 addMessage('assistant', 'Sorry, something went wrong. Please try again later.');
-
-                // Ensure the chat interface and input area remain visible
-                document.getElementById('chatInterface').style.display = 'flex';
-                document.querySelector('.input-area').style.display = 'flex';
             });
         }
 
@@ -428,6 +497,13 @@
                 sendMessage();
             }
         });
+
+        window.addEventListener('load', () => {
+            adjustForMobile();
+            // Clear the input field on page load
+            document.getElementById('user-input').value = '';
+        });
+        window.addEventListener('resize', adjustForMobile);
     </script>
 </body>
 </html>
