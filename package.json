@@ -1,23 +1,39 @@
 {
-  "name": "nodejs",
+  "name": "secure-choice-lending-chatbot",
   "version": "1.0.0",
-  "description": "",
+  "description": "A chatbot for Secure Choice Lending using OpenAI",
   "main": "index.js",
+  "type": "module",
   "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "chatbot",
+    "openai",
+    "mortgage",
+    "lending",
+    "secure-choice-lending"
+  ],
+  "author": "Secure Choice Lending",
   "license": "ISC",
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.27.3",
+    "@fal-ai/serverless-client": "^0.14.3",
     "@types/node": "^18.0.6",
     "body-parser": "^1.20.3",
-    "csv-parser": "^3.0.0",
     "csv-writer": "^1.6.0",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "express-session": "^1.18.0",
-    "openai": "^4.63.0"
+    "fs-extra": "^11.2.0",
+    "multer": "^1.4.5-lts.1",
+    "openai": "^4.66.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
