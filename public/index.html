@@ -151,10 +151,86 @@
         .input-area {
             display: flex;
             gap: 10px;
+            position: relative;
+            align-items: center;
         }
 
         #user-input {
             flex-grow: 1;
+        }
+
+        .voice-input-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+
+        .voice-input-button:hover {
+            transform: scale(1.1);
+        }
+
+        .voice-input-button svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .sound-wave {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            width: 50px;
+            height: 30px;
+            position: absolute;
+            right: 100px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .sound-wave .bar {
+            width: 3px;
+            height: 100%;
+            background-color: #ffffff;
+            animation: sound-wave 0.5s infinite alternate;
+        }
+
+        @keyframes sound-wave {
+            0% { height: 20%; }
+            100% { height: 100%; }
+        }
+
+        .loading-animation {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            right: 100px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .loading-animation .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin-bottom: 10px;
         }
 
         .disclaimer, .contact-info {
@@ -192,30 +268,35 @@
                 <span>Get Started</span>
             </button>
         </div>
-        <div id="chatInterface">
+        <div id="chatInterface" style="display:none;">
             <div class="chat-container"></div>
             <div class="loading">AI is thinking</div>
             <div class="input-area">
                 <input type="text" id="user-input" placeholder="Type your message...">
-                <button id="voice-input-button" class="voice-input">
+                <button id="voice-input-button" class="voice-input-button">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
                         <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
                         <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
                     </svg>
                 </button>
+                <div class="sound-wave">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+                <div class="loading-animation">
+                    <div class="spinner"></div>
+                </div>
                 <button class="shiny-cta" id="send-button">
                     <span>Send</span>
                 </button>
-            </div>
-            <div class="sound-wave" style="display: none;">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-            </div>
-            <div class="loading-animation" style="display: none;">
-                <div class="spinner"></div>
             </div>
         </div>
         <div class="mobile-footer">
